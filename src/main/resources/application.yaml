@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: insurance-backend
+  datasource:
+    url: jdbc:postgresql://localhost:5432/insurance_system
+    username: insurance
+    password: admin123
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
