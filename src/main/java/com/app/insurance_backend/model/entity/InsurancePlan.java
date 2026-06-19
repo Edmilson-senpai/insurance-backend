@@ -1,6 +1,7 @@
 package com.app.insurance_backend.model.entity;
 
-import com.app.insurance_backend.model.enums.TransactionType;
+import com.app.insurance_backend.model.enums.PlanStatus;
+import com.app.insurance_backend.model.enums.PlanType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -20,36 +21,39 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "account_transactions")
+@Table(name = "insurance_plans")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@ToString(exclude = "bankAccount")
-@EqualsAndHashCode(exclude = "bankAccount")
-public class AccountTransaction {
+@ToString(exclude = "insurance")
+@EqualsAndHashCode(exclude = "insurance")
+public class InsurancePlan {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name = "account_id", nullable = false)
-    private BankAccount bankAccount;
+    @JoinColumn(name = "insurance_id")
+    private Insurance insurance;
 
     @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private TransactionType type;
-
-    @Column(nullable = false)
-    private BigDecimal amount;
+    private String name;
 
     @Column(nullable = false)
     private String description;
 
+    @Column(nullable = false, precision = 10, scale = 2)
+    private BigDecimal price;
+
     @Column(nullable = false)
-    private LocalDateTime transactionDate;
+    @Enumerated(EnumType.STRING)
+    private PlanType type;
+
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private PlanStatus status;
 }

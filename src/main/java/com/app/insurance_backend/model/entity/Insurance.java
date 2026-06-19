@@ -1,6 +1,7 @@
 package com.app.insurance_backend.model.entity;
 
-import com.app.insurance_backend.model.enums.TransactionType;
+import com.app.insurance_backend.model.enums.InsuranceStatus;
+import com.app.insurance_backend.model.enums.InsuranceType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -18,38 +19,49 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "account_transactions")
+@Table(name = "insurances")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@ToString(exclude = "bankAccount")
-@EqualsAndHashCode(exclude = "bankAccount")
-public class AccountTransaction {
+@ToString(exclude = "createdBy")
+@EqualsAndHashCode(exclude = "createdBy")
+public class Insurance {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne
-    @JoinColumn(name = "account_id", nullable = false)
-    private BankAccount bankAccount;
+    @Column(nullable = false, unique = true)
+    private String name;
+
+    @Column(nullable = false, precision = 10, scale = 2)
+    private BigDecimal basePrice;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private TransactionType type;
+    private InsuranceType type;
 
     @Column(nullable = false)
-    private BigDecimal amount;
+    @Enumerated(EnumType.STRING)
+    private InsuranceStatus status;
 
-    @Column(nullable = false)
-    private String description;
+    @ManyToOne
+    @JoinColumn(name = "created_by", nullable = false)
+    private User createdBy;
 
+    @CreationTimestamp
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime created;
+
+    @UpdateTimestamp
     @Column(nullable = false)
-    private LocalDateTime transactionDate;
+    private LocalDateTime updated;
 }
