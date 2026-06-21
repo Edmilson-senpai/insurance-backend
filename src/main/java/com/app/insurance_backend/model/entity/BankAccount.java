@@ -1,6 +1,6 @@
 package com.app.insurance_backend.model.entity;
 
-import com.app.insurance_backend.model.enums.AccountStatus;
+import com.app.insurance_backend.model.enums.GeneralStatus;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -50,12 +50,12 @@ public class BankAccount {
     @Column(nullable = false)
     private String bankName;
 
-    @Column(nullable = false)
+    @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal availableBalance;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private AccountStatus status;
+    private GeneralStatus status;
 
     @CreationTimestamp
     @Column(nullable = false, updatable = false)

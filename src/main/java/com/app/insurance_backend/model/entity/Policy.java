@@ -1,7 +1,6 @@
 package com.app.insurance_backend.model.entity;
 
 import com.app.insurance_backend.model.enums.GeneralStatus;
-import com.app.insurance_backend.model.enums.InsuranceType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -20,48 +19,58 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "insurances")
+@Table(name = "policies")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@ToString(exclude = "createdBy")
-@EqualsAndHashCode(exclude = "createdBy")
-public class Insurance {
+@ToString(exclude = {"user", "insurance", "insurancePlan", "account"})
+@EqualsAndHashCode(exclude = {"user", "insurance", "insurancePlan", "account"})
+public class Policy {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(nullable = false, unique = true)
-    private String name;
+    private String number;
 
-    @Column(nullable = false, precision = 10, scale = 2)
-    private BigDecimal basePrice;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private InsuranceType type;
+    @ManyToOne
+    @JoinColumn(name = "insurance_id")
+    private Insurance insurance;
+
+    @ManyToOne
+    @JoinColumn(name = "plan_id")
+    private InsurancePlan insurancePlan;
+
+    @ManyToOne
+    @JoinColumn(name = "account_id")
+    private BankAccount account;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private GeneralStatus status;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User createdBy;
+    @Column(nullable = false)
+    private LocalDate start;
+
+    @Column(nullable = false)
+    private LocalDate end;
+
+    @Column(nullable = false, precision = 10, scale = 2)
+    private BigDecimal totalAmount;
 
     @CreationTimestamp
-    @Column(nullable = false, updatable = false)
+    @Column(nullable = false ,updatable = false)
     private LocalDateTime created;
-
-    @UpdateTimestamp
-    @Column(nullable = false)
-    private LocalDateTime updated;
 }

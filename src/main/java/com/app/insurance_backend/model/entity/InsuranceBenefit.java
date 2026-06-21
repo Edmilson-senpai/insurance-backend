@@ -1,7 +1,7 @@
 package com.app.insurance_backend.model.entity;
 
-import com.app.insurance_backend.model.enums.BenefitStatus;
 import com.app.insurance_backend.model.enums.BenefitType;
+import com.app.insurance_backend.model.enums.GeneralStatus;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -50,5 +50,5 @@ public class InsuranceBenefit {
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private BenefitStatus status;
+    private GeneralStatus status;
 }

@@ -9,33 +9,35 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.time.LocalDateTime;
+import java.math.BigDecimal;
 
 @Entity
-@Table(name = "user_roles")
+@Table(name = "policy_products")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@ToString(exclude = {"user", "role"})
-@IdClass(UserRoleId.class)
-public class UserRole {
+@ToString(exclude = {"policy", "insuranceProduct"})
+@EqualsAndHashCode(exclude = {"policy", "insuranceProduct"})
+@IdClass(PolicyProductId.class)
+public class PolicyProduct {
     @Id
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    @JoinColumn(name = "policy_id", nullable = false)
+    private Policy policy;
 
     @Id
     @ManyToOne
-    @JoinColumn(name = "role_id", nullable = false)
-    private Role role;
+    @JoinColumn(name = "product_id", nullable = false)
+    private InsuranceProduct insuranceProduct;
 
-    @Column(nullable = false)
-    private LocalDateTime assignedAt;
+    @Column(nullable = false, precision = 10, scale = 2)
+    private BigDecimal price;
 }

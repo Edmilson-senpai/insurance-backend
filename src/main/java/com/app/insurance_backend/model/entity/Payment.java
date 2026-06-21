@@ -1,7 +1,7 @@
 package com.app.insurance_backend.model.entity;
 
-import com.app.insurance_backend.model.enums.GeneralStatus;
-import com.app.insurance_backend.model.enums.InsuranceType;
+import com.app.insurance_backend.model.enums.PaymentMethod;
+import com.app.insurance_backend.model.enums.PaymentStatus;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -20,48 +20,44 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "insurances")
+@Table(name = "payments")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@ToString(exclude = "createdBy")
-@EqualsAndHashCode(exclude = "createdBy")
-public class Insurance {
+@ToString(exclude = {"policy", "account"})
+@EqualsAndHashCode(exclude = {"policy", "account"})
+public class Payment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = false, unique = true)
-    private String name;
-
-    @Column(nullable = false, precision = 10, scale = 2)
-    private BigDecimal basePrice;
-
-    @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private InsuranceType type;
-
-    @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private GeneralStatus status;
+    @ManyToOne
+    @JoinColumn(name = "policy_id")
+    private Policy policy;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User createdBy;
+    @JoinColumn(name = "account_id")
+    private BankAccount account;
+
+    @Column(nullable = false, precision = 10, scale = 2)
+    private BigDecimal amount;
 
     @CreationTimestamp
     @Column(nullable = false, updatable = false)
-    private LocalDateTime created;
+    private LocalDateTime paymentDate;
 
-    @UpdateTimestamp
     @Column(nullable = false)
-    private LocalDateTime updated;
+    @Enumerated(EnumType.STRING)
+    private PaymentMethod method;
+
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private PaymentStatus status;
 }

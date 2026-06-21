@@ -44,7 +44,7 @@ public class AccountTransaction {
     @Enumerated(EnumType.STRING)
     private TransactionType type;
 
-    @Column(nullable = false)
+    @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal amount;
 
     @Column(nullable = false)

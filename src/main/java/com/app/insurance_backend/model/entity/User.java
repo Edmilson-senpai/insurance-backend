@@ -1,6 +1,6 @@
 package com.app.insurance_backend.model.entity;
 
-import com.app.insurance_backend.model.enums.UserStatus;
+import com.app.insurance_backend.model.enums.GeneralStatus;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -49,7 +49,7 @@ public class User {
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private UserStatus status;
+    private GeneralStatus status;
 
     @Column(nullable = false)
     private String firstName;

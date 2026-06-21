@@ -1,6 +1,6 @@
 package com.app.insurance_backend.model.entity;
 
-import com.app.insurance_backend.model.enums.ProductStatus;
+import com.app.insurance_backend.model.enums.GeneralStatus;
 import com.app.insurance_backend.model.enums.ProductType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -64,5 +64,5 @@ public class InsuranceProduct {
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private ProductStatus status;
+    private GeneralStatus status;
 }

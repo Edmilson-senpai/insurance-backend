@@ -1,8 +1,11 @@
 package com.app.insurance_backend.model.enums;
 
-public enum PolicyStatus {
+public enum GeneralStatus {
     ACTIVE,
+    INACTIVE,
     SUSPENDED,
     CANCELLED,
-    EXPIRED
+    BLOCKED,
+    EXPIRED,
+    DISCONTINUED
 }
