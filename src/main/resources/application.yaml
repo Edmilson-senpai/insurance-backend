@@ -2,7 +2,7 @@ spring:
   application:
     name: insurance-backend
   datasource:
-    url: jdbc:postgresql://localhost:5432/insurance_system
+    url: jdbc:postgresql://localhost:5433/insurance_system
     username: insurance
     password: admin123
     driver-class-name: org.postgresql.Driver
@@ -10,3 +10,8 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
       ddl-auto: update
+
+app:
+  jwt:
+    secret: "404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970"
+    expiration: 86400000
