@@ -42,6 +42,9 @@ public class Insurance {
     @Column(nullable = false, unique = true)
     private String name;
 
+    @Column(nullable = false)
+    private String description;
+
     @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal basePrice;
 

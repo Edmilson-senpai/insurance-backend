@@ -21,7 +21,7 @@ import java.util.List;
 public class UserController {
     private final UserService userService;
 
-    @PostMapping("/registerAccount")
+    @PostMapping("/account")
     public ResponseEntity<BankAccountResponse> setBankAccount(
             @RequestBody @Valid BankAccountRequest bankAccountRequest) {
         BankAccountResponse bankAccountResponse;

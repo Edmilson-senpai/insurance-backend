@@ -3,6 +3,7 @@ package com.app.insurance_backend.auth.security;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -29,6 +30,11 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/v1/auth/**").permitAll()
                         .requestMatchers("/api/v1/user/**").hasRole("CLIENT")
+                        //ASSISTANT ONLY
+                        .requestMatchers(HttpMethod.POST, "/api/v1/insurance/**").hasRole("ASSISTANT")
+                        .requestMatchers(HttpMethod.PUT, "/api/v1/insurance/**").hasRole("ASSISTANT")
+                        //ASSISTANT AND CLIENT ACCESS
+                        .requestMatchers(HttpMethod.GET, "/api/v1/insurance/**").hasAnyRole("ASSISTANT", "CLIENT")
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session
