@@ -30,6 +30,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/v1/auth/**").permitAll()
                         .requestMatchers("/api/v1/user/**").hasRole("CLIENT")
+                        .requestMatchers("/api/v1/policy/**").hasRole("CLIENT")
+                        .requestMatchers("/api/v1/payment/**").hasRole("CLIENT")
                         //ASSISTANT ONLY
                         .requestMatchers(HttpMethod.POST, "/api/v1/insurance/**").hasRole("ASSISTANT")
                         .requestMatchers(HttpMethod.PUT, "/api/v1/insurance/**").hasRole("ASSISTANT")

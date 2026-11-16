@@ -64,7 +64,7 @@ public class Policy {
     @Column(nullable = false)
     private LocalDate start;
 
-    @Column(nullable = false)
+    @Column
     private LocalDate end;
 
     @Column(nullable = false, precision = 10, scale = 2)
